@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Chat - محادثة ذكية مع إنشاء صور</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo">
+                <div class="logo-icon">🤖</div>
+                <h1>AI Chat</h1>
+            </div>
+            
+            <div class="new-chat-btn" onclick="clearChat()">
+                <span>+</span> محادثة جديدة
+            </div>
+            
+            <div class="image-generator">
+                <h3>🎨 مولد الصور</h3>
+                <div class="style-selector">
+                    <label>نمط الصورة:</label>
+                    <select id="imageStyle">
+                        <option value="realistic">واقعي 📷</option>
+                        <option value="anime">أنمي ⛩️</option>
+                        <option value="animation">أنيميشن 🎬</option>
+                    </select>
+                </div>
+                <textarea id="imagePrompt" placeholder="صف الصورة التي تريد إنشاءها..."></textarea>
+                <button onclick="generateImage()" class="generate-btn">
+                    <span class="btn-icon">✨</span>
+                    إنشاء صورة
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Chat Area -->
+        <main class="chat-container">
+            <div class="chat-header">
+                <h2>المحادثة</h2>
+                <div class="header-actions">
+                    <button class="icon-btn" onclick="toggleTheme()" title="تغيير المظهر">🌙</button>
+                </div>
+            </div>
+
+            <div class="chat-messages" id="chatMessages">
+                <!-- رسالة الترحيب -->
+                <div class="message ai-message">
+                    <div class="avatar">🤖</div>
+                    <div class="message-content">
+                        <p>مرحباً! أنا مساعدك الذكي. يمكنك:</p>
+                        <ul>
+                            <li>💬 الدردشة معي في أي موضوع</li>
+                            <li>🎨 إنشاء صور واقعية أو أنمي أو أنيميشن</li>
+                        </ul>
+                        <p>كيف يمكنني مساعدتك اليوم؟</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="typing-indicator" id="typingIndicator" style="display: none;">
+                <div class="avatar">🤖</div>
+                <div class="typing-dots">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+
+            <div class="input-area">
+                <div class="input-wrapper">
+                    <textarea 
+                        id="userInput" 
+                        placeholder="اكتب رسالتك هنا..." 
+                        rows="1"
+                        onkeydown="handleKeyDown(event)"
+                    ></textarea>
+                    <button onclick="sendMessage()" class="send-btn" id="sendBtn">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="22" y1="2" x2="11" y2="13"></line>
+                            <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                        </svg>
+                    </button>
+                </div>
+                <p class="disclaimer">قد يقدم الذكاء الاصطناعي معلومات غير دقيقة. تحقق من المعلومات المهمة.</p>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal للصور -->
+    <div class="image-modal" id="imageModal" onclick="closeModal(event)">
+        <span class="close-modal">&times;</span>
+        <img class="modal-content" id="modalImage">
+    </div>
+
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>
